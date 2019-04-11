@@ -115,10 +115,11 @@ def create_document_db():
         Engine='docdb',
         Port=27017,
         MasterUsername='documentdbUser',
-        MasterUserPassword='documentdbPassword',
+        MasterUserPassword='documentdbPassword'
     )
 
-    docdbInstId = ['documentdb-instance1', 'documentdb-instance2']
+    docdbInstId = ['documentdb-instance1']
+    # docdbInstId = ['documentdb-instance1-1', 'documentdb-instance2-1']
 
     for instanceID in docdbInstId:
         docDBclient.create_db_instance(
@@ -133,6 +134,6 @@ def create_document_db():
     return
 
 
-add_ip_to_security_group()
-create_ec2_instance()
+# add_ip_to_security_group()
+# create_ec2_instance()
 create_document_db()
