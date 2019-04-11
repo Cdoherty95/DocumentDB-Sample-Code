@@ -7,18 +7,26 @@
 // Requiring the AWS SDK
 require 'vendor/autoload.php';
 
+
+# Global variables to store information about the DocumentDB Cluster
+$DatabaseUserName = 'documentdbUser';
+$DatabasePassword = 'documentdbPassword';
+$DatabaseEndpoint = 'documentdb-cluster-id.cluster-c6pxdhaullyc.us-east-1.docdb.amazonaws.com';
+
+
+$mongodbURI = "mongodb://$DatabaseUserName:$DatabasePassword@$DatabaseEndpoint:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0";
 // Instanciate MongoDB client class
-$client = new MongoDB\Client;
+$client = new MongoDB\Client($mongodbURI);
 // Variable selecting the customer_information_db database
 $customerInformationDB = $client->customer_information_db;
 // Variable selecting the collection
-//$collection = $customerInformationDB->collectionName;
+$customerCollection = $customerInformationDB->customers;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $query = $_POST['firstName'];
 }
 
-$documentlist = $customerInformationDB->find(
+$documentlist = $customerCollection->find(
     ['firstName' => $query]
 );
 
