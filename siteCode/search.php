@@ -15,7 +15,7 @@ $DatabaseEndpoint = '';
 
 
 $mongodbURI = "mongodb://$DatabaseUserName:$DatabasePassword@$DatabaseEndpoint:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0";
-// Instanciate MongoDB client class
+// Instantiate MongoDB client class
 $client = new MongoDB\Client($mongodbURI);
 // Variable selecting the customer_information_db database
 $customerInformationDB = $client->customer_information_db;
