@@ -116,7 +116,10 @@ def connect_to_documentdb():
     # a database is not created until it gets content
     customer_db_connection = client["customer_information_db"]
 
-    return customer_db_connection
+    # Variable to specify collection in our db
+    customer_db_collection = customer_db_connection["customers"]
+
+    return customer_db_collection
 
 # Inserting data into our documentdb database
 def insert_into_db():
