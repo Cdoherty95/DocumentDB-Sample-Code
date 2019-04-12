@@ -1,9 +1,9 @@
 <?php
 /**
- * https://www.youtube.com/watch?v=IBofrKP1Aa4
- * http://makble.com/mongodb-find-query-examples-with-php
- * https://www.php.net/manual/en/mongo.connecting.ssl.php
- * https://github.com/mongodb/mongo-php-library/issues/361
+ * Written By Chris Doherty
+ * IIT ITMO 557 - Storage Technologies: Research Paper
+ * AWS DocumentDB: A NoSQL Document Database Service Provided by Amazon Web Services
+ * This file will: Query the DocumentDB database for name passed by Post method
  */
 
 // Requiring the AWS SDK
@@ -77,12 +77,48 @@ $resultsFromQuery = $customerCollection->find(
 
 var_dump($resultsFromQuery);
 
+/*
+// Create table to display customer data
+echo '<table style="width:100%">';
+echo '<tr>';
+echo '<th>accountId</th>';
+echo '<th>SSN</th>';
+echo '<th>Last Name</th>';
+echo '<th>Gender</th>';
+echo '<th>Ethnicity</th>';
+echo '<th>Birth Date</th>';
+echo '<th>Address</th>';
+echo '<th>Industry</th>';
+echo '</tr>';
+
 // This loop iterates through the BSON object returned from our query
 foreach ($resultsFromQuery as $customer)
 {
-    echo $customer["birthDate"]["year"];
+    // Concatenate birth day and address into one variable
+    $fullBirthDay = $customer["birthDate"]["month"]."/".$customer["birthDate"]["day"]."/".$customer["birthDate"]["year"];
+    $addressConcatenated = $customer["address"]["street"].", ".$customer["address"]["city"]." ".$customer["address"]["state"].", ".$customer["address"]["zipCode"];
+
+    // Echo out data from returned query into the table
+    echo '<tr>';
+    echo '<td>'.$customer["accountId"].'</td>';
+    echo '<td>'.$customer["SSN"].'</td>';
+    echo '<td>'.$customer["lastName"].'</td>';
+    echo '<td>'.$customer["gender"].'</td>';
+    echo '<td>'.$customer["ethnicity"].'</td>';
+    echo '<td>'.$fullBirthDay.'</td>';
+    echo '<td>'.$addressConcatenated.'</td>';
+    echo '<td>'.$customer["Industry"].'</td>';
+    echo '</tr>';
 }
 
+// Close out table
+echo '</table>';
+*/
+
+echo '<br />';
+echo '<br />';
+
+// Link back to index page
 echo '<a href="index.html"><h1>Search Again</h1></a>';
 
 ?>
