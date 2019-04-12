@@ -21,7 +21,7 @@ customerData = {
             "firstName": "Michelle",
             "lastName": "Hannah",
             "gender": "female",
-            "ethnicity": "white",
+            "ethnicity": "White",
             "industry": "Food Preparation and Serving Related Occupations",
             "birthDate": {
                 "month": "6",
@@ -44,7 +44,7 @@ customerData = {
             "firstName": "Peter",
             "lastName": "Fitzgibbon",
             "gender": "male",
-            "ethnicity": "black",
+            "ethnicity": "Black",
             "industry": "Architecture and Engineering Occupations",
             "birthDate": {
                 "month": "7",
@@ -67,7 +67,7 @@ customerData = {
             "firstName": "Jean",
             "lastName": "Greenwood",
             "gender": "female",
-            "ethnicity": "white",
+            "ethnicity": "White",
             "industry": "Architecture and Engineering Occupations",
             "birthDate": {
                 "month": "12",
@@ -90,7 +90,7 @@ customerData = {
             "firstName": "Mary",
             "lastName": "Bush",
             "gender": "female",
-            "ethnicity": "asian",
+            "ethnicity": "Asian",
             "industry": "Military Specific Occupations",
             "birthDate": {
                 "month": "9",
