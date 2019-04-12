@@ -77,10 +77,12 @@ $resultsFromQuery = $customerCollection->find(
 
 var_dump($resultsFromQuery);
 
-/*
+echo '<br />';
+echo '<br />';
+
 // Create table to display customer data
-echo '<table style="width:100%">';
-echo '<tr>';
+echo '<table>'."\n";
+echo '<tr><br />';
 echo '<th>accountId</th>';
 echo '<th>SSN</th>';
 echo '<th>Last Name</th>';
@@ -96,7 +98,7 @@ foreach ($resultsFromQuery as $customer)
 {
     // Concatenate birth day and address into one variable
     $fullBirthDay = $customer["birthDate"]["month"]."/".$customer["birthDate"]["day"]."/".$customer["birthDate"]["year"];
-    $addressConcatenated = $customer["address"]["street"].", ".$customer["address"]["city"]." ".$customer["address"]["state"].", ".$customer["address"]["zipCode"];
+    $addressConcatenated = $customer["address"][0]["street"].", ".$customer["address"][0]["city"]." ".$customer["address"][0]["state"].", ".$customer["address"][0]["zipCode"];
 
     // Echo out data from returned query into the table
     echo '<tr>';
@@ -107,13 +109,13 @@ foreach ($resultsFromQuery as $customer)
     echo '<td>'.$customer["ethnicity"].'</td>';
     echo '<td>'.$fullBirthDay.'</td>';
     echo '<td>'.$addressConcatenated.'</td>';
-    echo '<td>'.$customer["Industry"].'</td>';
+    echo '<td>'.$customer["industry"].'</td>';
     echo '</tr>';
 }
 
 // Close out table
 echo '</table>';
-*/
+
 
 echo '<br />';
 echo '<br />';
