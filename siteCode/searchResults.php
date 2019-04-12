@@ -124,7 +124,7 @@ if ($result > 0) {
 // else there were no results
 else{
     // Print out there were no matching items
-    echo "Sorry there were no matching customers";
+    echo '<h1>Sorry there were no matching customers</h1>';
 }
 
 echo '<br />';
