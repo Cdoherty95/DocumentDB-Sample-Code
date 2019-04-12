@@ -75,47 +75,57 @@ $resultsFromQuery = $customerCollection->find(
     ['firstName' => $query]
 );
 
-var_dump($resultsFromQuery);
-
-echo '<br />';
-echo '<br />';
-
-// Create table to display customer data
-echo '<table>'."\n";
-echo '<tr><br />';
-echo '<th>accountId</th>';
-echo '<th>SSN</th>';
-echo '<th>Last Name</th>';
-echo '<th>Gender</th>';
-echo '<th>Ethnicity</th>';
-echo '<th>Birth Date</th>';
-echo '<th>Address</th>';
-echo '<th>Industry</th>';
-echo '</tr>';
+// Variable to indicate the number of results
+$result = 0;
 
 // This loop iterates through the BSON object returned from our query
 foreach ($resultsFromQuery as $customer)
 {
+    // Increase number of result variable
+    $result ++;
+
+    // Only print if it is the first time iterating
+    if ($result == 1) {
+        // Create table to display customer data
+        echo '<table>' . "\n";
+        echo '<tr>'. "\n";
+        echo '<th>accountId</th>'. "\n";
+        echo '<th>SSN</th>'. "\n";
+        echo '<th>Last Name</th>'. "\n";
+        echo '<th>Gender</th>'. "\n";
+        echo '<th>Ethnicity</th>'. "\n";
+        echo '<th>Birth Date</th>'. "\n";
+        echo '<th>Address</th>'. "\n";
+        echo '<th>Industry</th>'. "\n";
+        echo '</tr>'. "\n";
+    }
     // Concatenate birth day and address into one variable
-    $fullBirthDay = $customer["birthDate"]["month"]."/".$customer["birthDate"]["day"]."/".$customer["birthDate"]["year"];
-    $addressConcatenated = $customer["address"][0]["street"].", ".$customer["address"][0]["city"]." ".$customer["address"][0]["state"].", ".$customer["address"][0]["zipCode"];
+    $fullBirthDay = $customer["birthDate"]["month"] . "/" . $customer["birthDate"]["day"] . "/" . $customer["birthDate"]["year"];
+    $addressConcatenated = $customer["address"][0]["street"] . ", " . $customer["address"][0]["city"] . " " . $customer["address"][0]["state"] . ", " . $customer["address"][0]["zipCode"];
 
     // Echo out data from returned query into the table
-    echo '<tr>';
-    echo '<td>'.$customer["accountId"].'</td>';
-    echo '<td>'.$customer["SSN"].'</td>';
-    echo '<td>'.$customer["lastName"].'</td>';
-    echo '<td>'.$customer["gender"].'</td>';
-    echo '<td>'.$customer["ethnicity"].'</td>';
-    echo '<td>'.$fullBirthDay.'</td>';
-    echo '<td>'.$addressConcatenated.'</td>';
-    echo '<td>'.$customer["industry"].'</td>';
-    echo '</tr>';
+    echo '<tr>'. "\n";
+    echo '<td>' . $customer["accountId"] . '</td>'. "\n";
+    echo '<td>' . $customer["SSN"] . '</td>'. "\n";
+    echo '<td>' . $customer["lastName"] . '</td>'. "\n";
+    echo '<td>' . $customer["gender"] . '</td>'. "\n";
+    echo '<td>' . $customer["ethnicity"] . '</td>'. "\n";
+    echo '<td>' . $fullBirthDay . '</td>'. "\n";
+    echo '<td>' . $addressConcatenated . '</td>'. "\n";
+    echo '<td>' . $customer["industry"] . '</td>'. "\n";
+    echo '</tr>'. "\n";
 }
 
-// Close out table
-echo '</table>';
-
+// If there were any results
+if ($result > 0) {
+    // Close out table
+    echo '</table>'. "\n";
+}
+// else there were no results
+else{
+    // Print out there were no matching items
+    echo "Sorry there were no matching customers";
+}
 
 echo '<br />';
 echo '<br />';
