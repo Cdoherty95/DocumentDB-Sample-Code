@@ -1,3 +1,13 @@
+# Written By Chris Doherty
+# IIT ITMO 557 - Storage Technologies: Research Paper
+# AWS DocumentDB: A NoSQL Document Database Service Provided by Amazon Web Services
+# Python Version: 3.7.2
+# This file will:
+# 1) add your computer's public IP address to your security group on AWS
+# 2) provision an EC2 instance
+# 3) provision a DocumentDB cluster and two instances
+
+# Import Statements
 import boto3
 import urllib
 
@@ -27,6 +37,7 @@ def add_ip_to_security_group():
     # Formatting out public IP Address to be in cider notation
     cidr_ip = str(our_public_ip + "/32")
 
+    # Try catch block in case your IP address is already added to the security group
     try:
         # Call to function to add your public IP address to the security Group
         security_group_client.authorize_ingress(
@@ -46,6 +57,7 @@ def add_ip_to_security_group():
                 },
             ],
         )
+    # Catch exception if IP address is already allowed in the security group
     except Exception as e:
         error = str(e)
         if "already" in error:
@@ -103,6 +115,7 @@ def create_document_db():
     # Setting the DocumentDB Cluster Identifier to a variable to be referenced multiple times
     documentdb_id = 'documentdb-cluster-id'
 
+    # This statement will create a DocumentDB cluster
     docDBclient.create_db_cluster(
         AvailabilityZones=[
             'us-east-1a',
@@ -114,14 +127,17 @@ def create_document_db():
         ],
         Engine='docdb',
         Port=27017,
-        MasterUsername='documentdbUser',
-        MasterUserPassword='documentdbPassword'
+        MasterUsername='',
+        MasterUserPassword=''
     )
 
-    docdbInstId = ['documentdb-instance1']
-    # docdbInstId = ['documentdb-instance1-1', 'documentdb-instance2-1']
+    # This variable holds the desired identifiers for our DocumentDB instances
+    docdbInstId = ['documentdb-instance-1', 'documentdb-instance-2']
 
+    # Loop to call the statement for the number of instance names
     for instanceID in docdbInstId:
+
+        # This statement will create a DocumentDB instance
         docDBclient.create_db_instance(
             DBInstanceIdentifier=instanceID,
             DBInstanceClass='db.r4.large',
@@ -134,6 +150,7 @@ def create_document_db():
     return
 
 
-# add_ip_to_security_group()
-# create_ec2_instance()
+# Calls each function in order
+add_ip_to_security_group()
+create_ec2_instance()
 create_document_db()

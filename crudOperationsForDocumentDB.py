@@ -1,3 +1,10 @@
+# Written By Chris Doherty
+# IIT ITMO 557 - Storage Technologies: Research Paper
+# AWS DocumentDB: A NoSQL Document Database Service Provided by Amazon Web Services
+# Python Version: 3.7.2
+# This file will: insert customer data into a DocumentDB Cluster
+
+# Import Statement
 from pymongo import MongoClient
 
 # Global variables to store information about the DocumentDB Cluster
@@ -5,6 +12,7 @@ DatabaseUserName = ''
 DatabasePassword = ''
 DatabaseEndpoint = ''
 
+# Customer data to insert into DocumentDB. Each customer will be their own document
 customerData = {
     "customer": [
         {
@@ -99,15 +107,40 @@ customerData = {
                 }
             ],
         },
+        {
+            "accountId": "4532839403993108",
+            "SSN": "363565597",
+            "firstName": "Mary",
+            "lastName": "Blake",
+            "gender": "female",
+            "ethnicity": "White",
+            "industry": "Office and Administrative Support Occupations",
+            "birthDate": {
+                "month": "5",
+                "day": "19",
+                "year": "1995"
+            },
+            "address": [
+                {
+                    "status": "current",
+                    "street": "4183 Bombardier Way",
+                    "city": "Southfield",
+                    "state": "MI",
+                    "zipCode": "48075"
+                }
+            ],
+        },
     ]
 }
 
+
+# This function will return a connection to DocumentDB collection in a database
 def connect_to_documentdb():
     # http://api.mongodb.com/python/2.7rc0/tutorial.html
 
     # MongoDB connection URI. Based off of aws console. we can use the ssl but
     # .pem file is only on ec2 so for testing Im not using it
-    mongodb_uri = "mongodb://"+DatabaseUserName+":"+DatabasePassword+"@"+DatabaseEndpoint+":27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0"
+    mongodb_uri = "mongodb://" + DatabaseUserName + ":" + DatabasePassword + "@" + DatabaseEndpoint + ":27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0"
 
     # This creates the connection to the MongoDB server in aws
     client = MongoClient(mongodb_uri)
@@ -119,18 +152,23 @@ def connect_to_documentdb():
     # Variable to specify collection in our db
     customer_db_collection = customer_db_connection["customers"]
 
+    # Return connection to DocumentDB Collection
     return customer_db_collection
 
-# Inserting data into our documentdb database
-def insert_into_db():
 
+# Function to insert data into a DocumentDB database
+def insert_into_db():
     # Variable to hold the connection to our db
     db_connection = connect_to_documentdb()
 
     # Insert each set of customer information as a document
     for customer in customerData['customer']:
-        print(customer)
-        returnFromInsert = db_connection.insert_one(customer)
-        print(returnFromInsert)
+        # Call to insert one customer into the collection
+        return_from_insert_statement = db_connection.insert_one(customer)
 
+        # Print out response from inserting data
+        print(return_from_insert_statement)
+
+
+# Call to insert data into the database
 insert_into_db()
