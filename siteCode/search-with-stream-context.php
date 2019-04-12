@@ -2,6 +2,8 @@
 /**
  * https://www.youtube.com/watch?v=IBofrKP1Aa4
  * http://makble.com/mongodb-find-query-examples-with-php
+ * https://www.php.net/manual/en/mongo.connecting.ssl.php
+ * https://github.com/mongodb/mongo-php-library/issues/361
  */
 
 // Requiring the AWS SDK
@@ -16,6 +18,7 @@ $DatabaseEndpoint = '';
 $SSL_DIR = "/home/ubuntu";
 $SSL_FILE = "rds-combined-ca-bundle.pem";
 
+// try 1
 $ctx = stream_context_create(
     array(
         "ssl" => array(
@@ -38,27 +41,44 @@ $ctx = stream_context_create(
     )
 );
 
-$client = new MongoClient(
-    "mongodb://$DatabaseUserName:$DatabasePassword@$DatabaseEndpoint:27017",
-    array("ssl" => true),
-    array("context" => $ctx)
+// try 2
+$client = new MongoDB\Client(
+    "mongodb://$DatabaseUserName:$DatabasePassword@$DatabaseEndpoint:27017/",
+    [
+        'username' => $DatabaseUserName,
+        'password' => $DatabasePassword,
+        'ssl' => true,
+        'replicaSet' => 'rs0',
+        // 'authSource' => 'admin',
+    ],
+    [
+        'ca_dir' => $SSL_DIR,
+        'ca_file' => $SSL_FILE,
+        'pem_file' => $SSL_FILE,
+        // try 1
+        //'context' => '',
+        // try 2
+        //'context' => $ctx,
+        //'allow_invalid_hostname' => '',
+        //'weak_cert_validation' => ''
+    ]
 );
 
 
 //$mongodbURI = "mongodb://$DatabaseUserName:$DatabasePassword@$DatabaseEndpoint:27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0";
 // Instantiate MongoDB client class
-//$client = new MongoDB\Client($mongodbURI);
+// $client = new MongoDB\Client($mongodbURI);
 // Variable selecting the customer_information_db database
 $customerInformationDB = $client->customer_information_db;
 // Variable selecting the collection
 $customerCollection = $customerInformationDB->customers;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    $query = $_POST['firstName'];
-}
+//if ($_SERVER["REQUEST_METHOD"] == "POST"){
+//    $query = $_POST['Michelle'];
+//}
 
 $documentlist = $customerCollection->find(
-    ['firstName' => $query]
+    ['firstName' => 'Michelle']
 );
 
 foreach ($documentlist as $customer)
