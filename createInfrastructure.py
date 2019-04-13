@@ -18,7 +18,7 @@ def add_ip_to_security_group():
     # Get our Public Ip address and decode it to be a string
     our_public_ip = urllib.request.urlopen('http://ip.42.pl/raw').read().decode("utf-8")
 
-    # Create our client object referencing boto3 access to the ec2 service
+    # Instantiate a boto3 client object referencing the EC2 service
     client = boto3.client('ec2')
 
     # We are describing the security group to get the ID and name of the group
@@ -31,15 +31,15 @@ def add_ip_to_security_group():
     # Creating a variable object referencing the resources part of the SDK
     ec2 = boto3.resource('ec2')
 
-    # Creating our security group client and passing the group Id so it know what we want to work with
+    # Creating our security group client and passing the group Id so it knows what we want to work with
     security_group_client = ec2.SecurityGroup(security_group_id)
 
     # Formatting out public IP Address to be in cider notation
     cidr_ip = str(our_public_ip + "/32")
 
-    # Try catch block in case your IP address is already added to the security group
+    # Try catch block in case your IP address is already added to the Security Group
     try:
-        # Call to function to add your public IP address to the security Group
+        # Call to function to add your public IP address to the Security Group
         security_group_client.authorize_ingress(
             GroupName=security_group_name,
             IpPermissions=[
@@ -60,19 +60,16 @@ def add_ip_to_security_group():
     # Catch exception if IP address is already allowed in the security group
     except Exception as e:
         error = str(e)
-        if "already" in error:
-            print("Your Ip address is already allowed in the security group")
-        else:
-            print(e)
+        print("Your Ip address is already allowed in the security group") if "already" in error else print(e)
 
-    # End of add_ip_to_security_group
+    # This is the end of the add_ip_to_security_group function
     return
 
 
 # This function will launch an EC2 instance
 def create_ec2_instance():
 
-    # Create our client object referencing boto3 access to the ec2 service
+    # Instantiate a boto3 client object referencing the EC2 service
     client = boto3.client('ec2')
 
     # We are describing the security group to get the ID and name of the group
@@ -96,17 +93,17 @@ def create_ec2_instance():
         },
     )
 
-    # End of create_ec2_instance function
+    # This is the end of the create_ec2_instance function
     return
 
 
 # This function will create the DocumentDB cluster and instances
 def create_document_db():
 
-    # Create our client object referencing boto3 access to the DocumentDB service
+    # Instantiate a boto3 client object referencing the DocumentDB service
     docDBclient = boto3.client('docdb')
 
-    # Create our ec2 client referencing boto3 access to the ec2 service
+    # Instantiate a boto3 client object referencing the EC2 service
     ec2client = boto3.client('ec2')
 
     # We are describing the security group to get the ID and name of the group
@@ -146,7 +143,7 @@ def create_document_db():
             DBClusterIdentifier=documentdb_id,
         )
 
-    # This is the end of create_document_db function
+    # This is the end of the create_document_db function
     return
 
 

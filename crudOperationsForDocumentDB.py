@@ -138,8 +138,7 @@ customerData = {
 def connect_to_documentdb():
     # http://api.mongodb.com/python/2.7rc0/tutorial.html
 
-    # MongoDB connection URI. Based off of aws console. we can use the ssl but
-    # .pem file is only on ec2 so for testing Im not using it
+    # MongoDB connection URI. Based off of AWS console.
     mongodb_uri = "mongodb://" + DatabaseUserName + ":" + DatabasePassword + "@" + DatabaseEndpoint + ":27017/?ssl=true&ssl_ca_certs=rds-combined-ca-bundle.pem&replicaSet=rs0"
 
     # This creates the connection to the MongoDB server in aws
