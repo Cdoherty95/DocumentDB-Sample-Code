@@ -87,7 +87,7 @@ foreach ($resultsFromQuery as $customer)
     // Only print if it is the first time iterating
     if ($result == 1) {
         // Create table to display customer data
-        echo '<table>' . "\n";
+        echo '<table style="width: 100%; text-align: center;">' . "\n";
         echo '<tr>'. "\n";
         echo '<th>accountId</th>'. "\n";
         echo '<th>SSN</th>'. "\n";
